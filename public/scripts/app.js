@@ -35,6 +35,11 @@ const sortTweetsByTimeStamp = (tweets) => {
 };
 
 $(document).ready(function() {
+  //bind slide toggle to Compose button
+  $("#compose-button").click(function() {
+    $(".new-tweet").slideToggle();
+    $("textarea").focus();
+  });
   //render tweet when page is loaded
   $.getJSON("/tweets", (data) => {
     $(".tweets-container").append(renderTweets(data));
