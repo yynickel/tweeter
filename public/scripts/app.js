@@ -34,6 +34,16 @@ const sortTweetsByTimeStamp = (tweets) => {
   });
 };
 
+const displayError = (str) => {
+  $(".error-container").slideDown();
+  $(".error-message").text(str);
+};
+
+const hideError = () => {
+  $(".error-container").toggle();
+  $(".error-message").text("");
+};
+
 $(document).ready(function() {
   //bind slide toggle to Compose button
   $("#compose-button").click(function() {
@@ -47,11 +57,14 @@ $(document).ready(function() {
   //handle submission for new tweet
   $("form").submit(function(event) {
     event.preventDefault();
+    if ($(".error-container").is(":visible")) {
+      hideError();
+    }
     const userInput = $("textarea").val();
     if (!userInput.length) {
-      alert("Tweet cannot be empty!");
+      displayError("ERROR: Tweet cannot be empty!");
     } else if (userInput.length > 140) {
-      alert("Tweet cannot exceed 140 character maximum length!");
+      displayError("ERROR: Tweet cannot exceed 140 character maximum length!");
     } else {
       $.post("/tweets", `${$(this).serialize()}`, function(data) {
         $.getJSON("/tweets", (tweets) => {
@@ -60,9 +73,9 @@ $(document).ready(function() {
           $(".tweets-container").prepend(createTweetElement(tweets[0]));
         });
       });
+      //resetting form
+      $(this)[0].reset();
+      $("#compose-counter").text(140);
     }
-    //resetting form
-    $(this)[0].reset();
-    $("#compose-counter").text(140);
   });
 });

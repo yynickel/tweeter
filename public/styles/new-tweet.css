@@ -26,3 +26,13 @@ main .counter {
 .over-max-character {
   color: red;
 }
+
+.error-container {
+  display: none;
+  border: 1px solid white;
+  border-radius: 5px;
+  margin: 0 2em 20px 2em;
+  padding: 10px;
+  background-color: #ff9800;
+  font-weight: bold;
+}
