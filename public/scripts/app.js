@@ -4,69 +4,6 @@
  * Reminder: Use (and do all your DOM work in) jQuery's document ready function
  */
 
-const tweetData = {
-  "user": {
-    "name": "Newton",
-    "avatars": {
-      "small": "https://vanillicon.com/788e533873e80d2002fa14e1412b4188_50.png",
-      "regular": "https://vanillicon.com/788e533873e80d2002fa14e1412b4188.png",
-      "large": "https://vanillicon.com/788e533873e80d2002fa14e1412b4188_200.png"
-    },
-    "handle": "@SirIsaac"
-  },
-  "content": {
-    "text": "If I have seen further it is by standing on the shoulders of giants"
-  },
-  "created_at": 1461116232227
-};
-
-const data = [{
-    "user": {
-      "name": "Newton",
-      "avatars": {
-        "small": "https://vanillicon.com/788e533873e80d2002fa14e1412b4188_50.png",
-        "regular": "https://vanillicon.com/788e533873e80d2002fa14e1412b4188.png",
-        "large": "https://vanillicon.com/788e533873e80d2002fa14e1412b4188_200.png"
-      },
-      "handle": "@SirIsaac"
-    },
-    "content": {
-      "text": "If I have seen further it is by standing on the shoulders of giants"
-    },
-    "created_at": 1461116232227
-  },
-  {
-    "user": {
-      "name": "Descartes",
-      "avatars": {
-        "small": "https://vanillicon.com/7b89b0d8280b93e2ba68841436c0bebc_50.png",
-        "regular": "https://vanillicon.com/7b89b0d8280b93e2ba68841436c0bebc.png",
-        "large": "https://vanillicon.com/7b89b0d8280b93e2ba68841436c0bebc_200.png"
-      },
-      "handle": "@rd"
-    },
-    "content": {
-      "text": "Je pense , donc je suis"
-    },
-    "created_at": 1461113959088
-  },
-  {
-    "user": {
-      "name": "Johann von Goethe",
-      "avatars": {
-        "small": "https://vanillicon.com/d55cf8e18b47d4baaf60c006a0de39e1_50.png",
-        "regular": "https://vanillicon.com/d55cf8e18b47d4baaf60c006a0de39e1.png",
-        "large": "https://vanillicon.com/d55cf8e18b47d4baaf60c006a0de39e1_200.png"
-      },
-      "handle": "@johann49"
-    },
-    "content": {
-      "text": "Es ist nichts schrecklicher als eine tätige Unwissenheit."
-    },
-    "created_at": 1461113796368
-  }
-];
-
 const createTweetElement = (tweet) => {
   let $tweet = $('<article>').addClass('tweet');
   //generate header
@@ -87,11 +24,40 @@ const createTweetElement = (tweet) => {
 };
 
 const renderTweets = (tweets) => {
+  sortTweetsByTimeStamp(tweets);
   return tweets.map(element => createTweetElement(element));
 };
 
-const $tweet = renderTweets(data);
-console.log($tweet[0]);
+const sortTweetsByTimeStamp = (tweets) => {
+  tweets.sort((a, b) => {
+    return b.created_at - a.created_at;
+  });
+};
+
 $(document).ready(function() {
-  $(".tweets-container").append($tweet);
+  //render tweet when page is loaded
+  $.getJSON("/tweets", (data) => {
+    $(".tweets-container").append(renderTweets(data));
+  });
+  //handle submission for new tweet
+  $("form").submit(function(event) {
+    event.preventDefault();
+    const userInput = $("textarea").val();
+    if (!userInput.length) {
+      alert("Tweet cannot be empty!");
+    } else if (userInput.length > 140) {
+      alert("Tweet cannot exceed 140 character maximum length!");
+    } else {
+      $.post("/tweets", `${$(this).serialize()}`, function(data) {
+        $.getJSON("/tweets", (tweets) => {
+          sortTweetsByTimeStamp(tweets);
+          //prepend the newest tweet at the top
+          $(".tweets-container").prepend(createTweetElement(tweets[0]));
+        });
+      });
+    }
+    //resetting form
+    $(this)[0].reset();
+    $("#compose-counter").text(140);
+  });
 });
