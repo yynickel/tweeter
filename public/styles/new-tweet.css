@@ -2,7 +2,7 @@ main .new-tweet {
   border: 1px solid;
   border-color: lightgrey;
   border-radius: 5px;
-  margin: 0 2em 0 2em;
+  margin: 0 2em 20px 2em;
   padding: 10px;
   background-color: #eee;
 }
@@ -16,10 +16,12 @@ main textarea {
   width: 100%;
 }
 
-main input {}
-
-main span {
+main .counter {
   float: right;
   margin-right: 10px;
   font-style: italic;
+}
+
+.over-max-character {
+  color: red;
 }
