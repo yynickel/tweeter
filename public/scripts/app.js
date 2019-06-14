@@ -16,6 +16,7 @@ const createTweetElement = (tweet) => {
   let $body = $("<div>").addClass("tweet-body").append($tweetContent);
   //generate footer
   let $timeStamp = $("<p>").addClass("time-stamp").text(jQuery.timeago(new Date(tweet.created_at)));
+  //adding icons
   $("<span>").addClass("likes").html("<i class='far fa-flag'></i><i class='fas fa-retweet'></i><i class='fas fa-heart'></i>").appendTo($timeStamp);
   let $footer = $("<div>").addClass("tweet-footer").append($timeStamp);
   //assemble
@@ -54,6 +55,11 @@ $(document).ready(function() {
   //render tweet when page is loaded
   $.getJSON("/tweets", (data) => {
     $(".tweets-container").append(renderTweets(data));
+    //making heart clickable
+    $(".fa-heart").click(function(event) {
+      console.log("clicked");
+      $(this).toggleClass("liked");
+    });
   });
   //handle submission for new tweet
   $("form").submit(function(event) {
@@ -79,4 +85,7 @@ $(document).ready(function() {
       $("#compose-counter").text(140);
     }
   });
+
+  //handle likes for tweets
+
 });

@@ -76,6 +76,10 @@ main {
 .tweet .likes i {
   color: #00a087;
   margin: auto 3px;
+  font-size: 135%;
+}
+.tweet .likes .liked {
+  color: hotpink;
 }
 
 .tweet:hover {
