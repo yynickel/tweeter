@@ -1,0 +1,55 @@
+.tweet {
+  border: 1px solid;
+  border-color: lightgrey;
+  border-radius: 5px;
+  margin: 0 2em 20px 2em;
+  word-wrap: break-word;
+  opacity: 0.7;
+
+  .tweet-header {
+    height: 70px;
+    padding: 10px;
+    background-color: #eee;
+  }
+
+  .tweet-body {
+    padding: 10px;
+    border-bottom: 1px solid lightgrey;
+  }
+
+  .tweet-username {
+    margin-left: 10px;
+    display: inline;
+  }
+
+  .profile-picture {
+    height: 50px;
+    width: 50px;
+    float: left;
+    border-radius: 5px;
+  }
+
+  .hash-tag {
+    float: right;
+  }
+
+  .time-stamp {
+    padding-left: 10px;
+    font-size: 80%;
+  }
+
+  .likes {
+    float: right;
+    padding-right: 10px;
+    visibility: hidden;
+  }
+
+}
+
+.tweet:hover {
+  opacity: 1;
+
+  .likes {
+    visibility: visible;
+  }
+}
