@@ -11,7 +11,6 @@ html {
 *:before,
 *:after {
   box-sizing: inherit;
-  font-family: "Roboto Condensed", sans-serif;
 }
 
 /*
@@ -21,6 +20,7 @@ body {
   margin: 0;
   color: #244751;
   background-color: #eee;
+  font-family: "Roboto Condensed", sans-serif;
 }
 
 /*
@@ -72,6 +72,10 @@ main {
   float: right;
   padding-right: 10px;
   visibility: hidden;
+}
+.tweet .likes i {
+  color: #00a087;
+  margin: auto 3px;
 }
 
 .tweet:hover {

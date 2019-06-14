@@ -16,13 +16,14 @@ const createTweetElement = (tweet) => {
   let $body = $("<div>").addClass("tweet-body").append($tweetContent);
   //generate footer
   let $timeStamp = $("<p>").addClass("time-stamp").text(jQuery.timeago(new Date(tweet.created_at)));
-  $("<span>").addClass("likes").text("🏳🔃❤️").appendTo($timeStamp);
+  $("<span>").addClass("likes").html("<i class='far fa-flag'></i><i class='fas fa-retweet'></i><i class='fas fa-heart'></i>").appendTo($timeStamp);
   let $footer = $("<div>").addClass("tweet-footer").append($timeStamp);
   //assemble
   $tweet.append($header, $body, $footer);
   return $tweet;
 };
 
+//render an array of tweet objects
 const renderTweets = (tweets) => {
   sortTweetsByTimeStamp(tweets);
   return tweets.map(element => createTweetElement(element));

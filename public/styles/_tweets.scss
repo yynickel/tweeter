@@ -42,6 +42,11 @@
     float: right;
     padding-right: 10px;
     visibility: hidden;
+
+    i {
+      color: $primary-green;
+      margin: auto 3px;
+    }
   }
 
 }
