@@ -3,6 +3,37 @@
  * https://css-tricks.com/international-box-sizing-awareness-day/
  * Do not modify these two selectors, please
  */
+html {
+  box-sizing: border-box;
+}
+
+*,
+*:before,
+*:after {
+  box-sizing: inherit;
+  font-family: "Roboto Condensed", sans-serif;
+}
+
+/*
+ * Global layout stuff
+ */
+body {
+  margin: 0;
+  color: #244751;
+  background-color: #eee;
+}
+
+/*
+ * Additional CSS can be defined below or in other CSS files, as per instructions
+ */
+main {
+  width: 450px;
+  height: auto;
+  margin: 0 auto 0 auto;
+  padding: 140px 0 100% 0;
+  background-color: white;
+}
+
 .tweet {
   border: 1px solid;
   border-color: lightgrey;
@@ -126,37 +157,6 @@ main .counter {
   padding: 10px;
   background-color: #ff9800;
   font-weight: bold;
-}
-
-html {
-  box-sizing: border-box;
-}
-
-*,
-*:before,
-*:after {
-  box-sizing: inherit;
-  font-family: "Roboto Condensed", sans-serif;
-}
-
-/*
- * Global layout stuff
- */
-body {
-  margin: 0;
-  color: #244751;
-  background-color: #eee;
-}
-
-/*
- * Additional CSS can be defined below or in other CSS files, as per instructions
- */
-main {
-  width: 450px;
-  height: auto;
-  margin: 0 auto 0 auto;
-  padding: 140px 0 100% 0;
-  background-color: white;
 }
 
 /*# sourceMappingURL=style.css.map */
