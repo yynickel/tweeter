@@ -17,7 +17,8 @@ const createTweetElement = (tweet) => {
   //generate footer
   let $timeStamp = $("<p>").addClass("time-stamp").text(jQuery.timeago(new Date(tweet.created_at)));
   //adding icons
-  $("<span>").addClass("likes").html("<i class='far fa-flag'></i><i class='fas fa-retweet'></i><i class='fas fa-heart'></i>").appendTo($timeStamp);
+  const $heart = $("<i>").addClass("fas fa-heart").data("numLikes", tweet.num_likes).data("liked", false).data("timeStamp", tweet.created_at).text(tweet.num_likes);
+  $("<span>").addClass("likes").html(`<i class='far fa-flag'></i><i class='fas fa-retweet'></i>`).append($heart).appendTo($timeStamp);
   let $footer = $("<div>").addClass("tweet-footer").append($timeStamp);
   //assemble
   $tweet.append($header, $body, $footer);
@@ -36,6 +37,7 @@ const sortTweetsByTimeStamp = (tweets) => {
   });
 };
 
+//display/hide error message
 const displayError = (str) => {
   $(".error-container").slideDown();
   $(".error-message").text(str);
@@ -46,6 +48,44 @@ const hideError = () => {
   $(".error-message").text("");
 };
 
+//adding functionalities to the like button(heart)
+const handleHeart = () => {
+  //making heart clickable
+  $(".fa-heart").click(function(event) {
+    //change the appearance when clicked
+    let numberLikes = $(this).data("numLikes");
+    if (!$(this).data("liked")) {
+      numberLikes++;
+      $(this).data("liked", true);
+    } else {
+      numberLikes--;
+      $(this).data("liked", false);
+    }
+    $(this).data("numLikes", numberLikes);
+    $(this).text(numberLikes);
+    $(this).toggleClass("liked");
+    //update the back-end
+    const dataToBeSent = {
+      numLikes: numberLikes,
+      created_at: $(this).data("timeStamp"),
+    };
+    $.ajax({
+      url: "/tweets",
+      method: "PUT",
+      dataType: "json",
+      data: dataToBeSent,
+      success: function(data) {
+        console.log("put success" + data);
+      }
+    });
+  });
+};
+
+
+
+
+
+//when document is ready
 $(document).ready(function() {
   //bind slide toggle to Compose button
   $("#compose-button").click(function() {
@@ -55,11 +95,7 @@ $(document).ready(function() {
   //render tweet when page is loaded
   $.getJSON("/tweets", (data) => {
     $(".tweets-container").append(renderTweets(data));
-    //making heart clickable
-    $(".fa-heart").click(function(event) {
-      console.log("clicked");
-      $(this).toggleClass("liked");
-    });
+    handleHeart();
   });
   //handle submission for new tweet
   $("form").submit(function(event) {

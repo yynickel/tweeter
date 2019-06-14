@@ -78,6 +78,9 @@ main {
   margin: auto 3px;
   font-size: 135%;
 }
+.tweet .likes .fa-heart {
+  cursor: pointer;
+}
 .tweet .likes .liked {
   color: hotpink;
 }

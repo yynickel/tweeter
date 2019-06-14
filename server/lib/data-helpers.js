@@ -25,6 +25,17 @@ module.exports = function makeDataHelpers(mongoClient) {
           db.close();
         });
       });
+    },
+
+    //update the likes of a tweet using time created
+    updateLikes: function(tweet, callback) {
+      mongoClient.connect(MONGODB_URI, (err, db) => {
+        db.collection("tweets").updateOne({ "created_at": Number(tweet.created_at) }, { $set: { num_likes: tweet.numLikes } }, (err, r) => {
+          console.log("update error: " + r);
+        });
+        callback(null, true);
+        db.close();
+      });
     }
-  };
-}
+  }
+};
