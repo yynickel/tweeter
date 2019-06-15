@@ -20,3 +20,10 @@ This repository is the starter code for the project: Students will fork and clon
 - md5
 - mongodb 2.2.x
 - Node 5.10.x or above
+
+## Screenshots
+
+!["Home Page"](https://github.com/yynickel/tweeter/blob/master/docs/home-page.png)
+!["When the Compose button is clicked, a text area will slide down, allowing users to post new tweets"](https://github.com/yynickel/tweeter/blob/master/docs/compose-button-clicked.png)
+!["After posting new tweets are fetched and displayed in real time"](https://github.com/yynickel/tweeter/blob/master/docs/success-tweet.png)
+!["An error message will show when the tweet body is empty or over 140 characters"](https://github.com/yynickel/tweeter/blob/master/docs/error-message.png)
