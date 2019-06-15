@@ -1,5 +1,7 @@
 "use strict";
 
+const dummy_tweets = require("../data-files/initial-tweets");
+
 //route of the database for storage
 const MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost:27017/tweeter";
 
@@ -20,6 +22,11 @@ module.exports = function makeDataHelpers(mongoClient) {
     getTweets: function(callback) {
       mongoClient.connect(MONGODB_URI, (err, db) => {
         db.collection("tweets").find().toArray((err, tweets) => {
+          //if there is no tweet in the database yet, put some in
+          if (err || !tweets.length) {
+            db.collection("tweets").insert(dummy_tweets);
+            tweets = dummy_tweets;
+          }
           const sortNewestFirst = (a, b) => a.created_at - b.created_at;
           callback(null, tweets.sort(sortNewestFirst));
           db.close();
