@@ -1,7 +1,7 @@
 "use strict";
 
 //route of the database for storage
-const MONGODB_URI = process.env.MONGODB_URI;
+const MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost:27017/tweeter";
 
 // Defines helper functions for saving and getting tweets, using the database `db`
 module.exports = function makeDataHelpers(mongoClient) {

@@ -121,7 +121,4 @@ $(document).ready(function() {
       $("#compose-counter").text(140);
     }
   });
-
-  //handle likes for tweets
-
 });
