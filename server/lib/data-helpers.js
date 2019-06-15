@@ -31,9 +31,8 @@ module.exports = function makeDataHelpers(mongoClient) {
     updateLikes: function(tweet, callback) {
       mongoClient.connect(MONGODB_URI, (err, db) => {
         db.collection("tweets").updateOne({ "created_at": Number(tweet.created_at) }, { $set: { num_likes: tweet.numLikes } }, (err, r) => {
-          console.log("update error: " + r);
+          callback(err, r);
         });
-        callback(null, true);
         db.close();
       });
     }
